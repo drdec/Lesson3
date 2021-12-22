@@ -86,9 +86,16 @@ namespace Lesson3
                 Console.WriteLine("Введите вашу строку");
                 string str = Console.ReadLine();
 
-                for (int i = str.Length - 1; i >= 0; i--)
+                if (str.Length == 0)
                 {
-                    Console.Write(str[i]);
+                    Console.Write("");
+                }
+                else
+                {
+                    for (int i = str.Length - 1; i >= 0; i--)
+                    {
+                        Console.Write(str[i]);
+                    }
                 }
             }
 
