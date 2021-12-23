@@ -15,8 +15,6 @@ namespace Lesson3
 
         static void Main()
         {
-            goto m;
-
             Console.WriteLine("Задание 1");
             {
                 Random rand = new();
@@ -114,7 +112,6 @@ namespace Lesson3
             Console.WriteLine();
 
 
-            m: //УДАЛИТЬ ПОСЛЕ ЗАВЕРШЕНИЯ РАБОТЫ НАД 4 ЗАДАНИЕМ!!!!!!!!!!!!!!!!!!!
 
 
             Console.WriteLine("Задание 4");
@@ -150,7 +147,7 @@ namespace Lesson3
 
                     Console.WriteLine("Введите 1, чтобы добавить однопалубный корабль, 2 - двухапалубный, 3 - трезпалубный, 4 - черырехпалубный");
 
-                    int n = 0;
+                    int n;
 
                     try
                     {
