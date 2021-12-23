@@ -225,7 +225,13 @@ namespace Lesson3
 
                 Console.Clear();
 
+                Console.WriteLine();
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Конечное расположение кораблей выглядит так :");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine();
+
                 DrawField(field);
 
                 Console.ReadKey();
@@ -274,13 +280,13 @@ namespace Lesson3
                             Console.WriteLine("Введите начало корабля по координате x (номер строки)");
                             coordinateXBeg = Convert.ToInt32(Console.ReadLine());
 
-                            Console.WriteLine("Введите начало корабля по координате y (номер строки)");
+                            Console.WriteLine("Введите начало корабля по координате y (номер столбца)");
                             coordinateYBeg = Convert.ToInt32(Console.ReadLine());
 
                             Console.WriteLine("Введите конец корабля по координате x (номер строки)");
                             coordinateXEnd = Convert.ToInt32(Console.ReadLine());
 
-                            Console.WriteLine("Введите конец корабля по координате y (номер строки)");
+                            Console.WriteLine("Введите конец корабля по координате y (номер столбца)");
                             coordinateYEnd = Convert.ToInt32(Console.ReadLine());
 
                             if (!(coordinateXBeg >= 0 && coordinateXBeg <= field.GetLength(0) - 1 && coordinateYBeg >= 0 && coordinateYBeg <= field.GetLength(1) - 1))
@@ -347,6 +353,7 @@ namespace Lesson3
 
         static void DrawField(char[,] field)
         {
+            Console.ForegroundColor = ConsoleColor.White;
             for (int i = 0; i< field.GetLength(0); i++)
             {
                 for (int j = 0; j < field.GetLength(1); j++)
@@ -375,81 +382,6 @@ namespace Lesson3
                     {
                         return true;
                     }
-                    //{
-                    //    if (field[x, y] == 'O')
-                    //    {
-                    //        if (x == 0 && y == 0)
-                    //        {
-                    //            if (field[x, y] == 'O' && field[x + 1, y + 1] == 'O' && field[x + 1, y] == 'O')
-                    //            {
-                    //                return true;
-                    //            }
-                    //        }
-                    //        else if (x == field.GetLength(0) - 1 && y == field.GetLength(1) - 1)
-                    //        {
-                    //            if (field[x, y] == 'O' && field[x - 1, y - 1] == 'O' && field[x - 1, y] == 'O')
-                    //            {
-                    //                return true;
-                    //            }
-                    //        }
-                    //        else if (x == 0 && y != 0 && y != field.GetLength(1) - 1)
-                    //        {
-                    //            if (field[x, y - 1] == 'O' && field[x, y + 1] == 'O' && field[x + 1, y - 1] == 'O' && field[x + 1, y] == 'O' && field[x + 1, y + 1] == 'O')
-                    //            {
-                    //                return true;
-                    //            }
-                    //        }
-                    //        else if (x == field.GetLength(0) - 1 && y != 0 && y != field.GetLength(1) - 1)
-                    //        {
-                    //            if (field[x, y - 1] == 'O' && field[x, y + 1] == 'O' && field[x - 1, y - 1] == 'O' && field[x - 1, y] == 'O' && field[x - 1, y + 1] == 'O')
-                    //            {
-                    //                return true;
-                    //            }
-                    //        }
-                    //        else if (x != 0 && y == 0 && x != field.GetLength(0) - 1)
-                    //        {
-                    //            if (field[x - 1, y] == 'O' && field[x, y] == 'O' && field[x + 1, y] == 'O' && field[x - 1, y + 1] == 'O' && field[x, y + 1] == 'O' && field[x + 1, y + 1] == 'O')
-                    //            {
-                    //                return true;
-                    //            }
-                    //        }
-                    //        else if (x != 0 && y == field.GetLength(1) - 1 && x != field.GetLength(0) - 1)
-                    //        {
-                    //            if (field[x - 1, y] == 'O' && field[x, y] == 'O' && field[x + 1, y] == 'O' && field[x - 1, y - 1] == 'O' && field[x, y - 1] == 'O' && field[x + 1, y - 1] == 'O')
-                    //            {
-                    //                return true;
-                    //            }
-                    //        }
-                    //        else if (x == field.GetLength(0) - 1 && y == field.GetLength(1) - 1)
-                    //        {
-                    //            for (int i = x - 1; i <= x; i++)
-                    //            {
-                    //                for (int j = y - 1; j <= y; j++)
-                    //                {
-                    //                    if (field[i,j] == SHIP_SYMBOL)
-                    //                    {
-                    //                        return false;
-                    //                    }
-                    //                }
-                    //            }
-                    //        }
-                    //        else
-                    //        {
-                    //            for (int i = x - 1; i <= x + 1; i++)
-                    //            {
-                    //                for (int j = y - 1; j <= y + 1; j++)
-                    //                {
-                    //                    if (field[i,j] == SHIP_SYMBOL)
-                    //                    {
-                    //                        return false;
-                    //                    }
-                    //                }
-                    //            }
-
-                    //            return true;
-                    //        }
-                    //    }
-                    //}
                     return false;
 
                 case Ship.DoubleDeck:
@@ -558,13 +490,78 @@ namespace Lesson3
                     }
                 }
             }
+            else if (x1 != field.GetLength(0) - 1 && y1 == field.GetLength(1) - 1 && x != 0)
+            {
+                for (int i = x - 1; i <= x1 + 1; i++)
+                {
+                    for (int j = y - 1; j <= y1; j++)
+                    {
+                        if (field[i, j] == SHIP_SYMBOL)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            else if (x1 == field.GetLength(0) - 1 && y1 != field.GetLength(1) - 1 && y != 0)
+            {
+                for (int i = x - 1; i <= x1; i++)
+                {
+                    for (int j = y - 1; j <= y1 + 1; j++)
+                    {
+                        if (field[i, j] == SHIP_SYMBOL)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            else if (x == 0 && y != 0 && y1 != 0 && y1 != field.GetLength(1) - 1)
+            {
+                for (int i = x; i <= x1 + 1; i++)
+                {
+                    for (int j = y - 1; j <= y1 + 1; j++)
+                    {
+                        if (field[i, j] == SHIP_SYMBOL)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            else if (y == 0 && x != 0 && x1 != field.GetLength(1) - 1)
+            {
+                for (int i = x - 1; i <= x1 + 1; i++)
+                {
+                    for (int j = y; j <= y1 + 1; j++)
+                    {
+                        if (field[i, j] == SHIP_SYMBOL)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            else if (x == 0 && y1 == field.GetLength(1) - 1)
+            {
+                for (int i = x; i <= x1 + 1; i++)
+                {
+                    for (int j = y - 1; j <= y1; j++)
+                    {
+                        if (field[i,j] == SHIP_SYMBOL)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
             else
             {
                 for (int i = x - 1; i < x1 + 1; i++)
                 {
                     for (int j = y - 1; j <= y1 + 1; j++)
                     {
-                        if (field[i,j] == SHIP_SYMBOL)
+                        if (field[i, j] == SHIP_SYMBOL)
                         {
                             return false;
                         }
