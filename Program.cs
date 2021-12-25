@@ -15,7 +15,6 @@ namespace Lesson3
 
         static void Main()
         {
-            goto m;
             Console.WriteLine("Задание 1");
             {
                 Random rand = new();
@@ -111,9 +110,6 @@ namespace Lesson3
 
             Console.WriteLine();
             Console.WriteLine();
-
-
-            m:
 
             Console.WriteLine("Задание 4");
             {
