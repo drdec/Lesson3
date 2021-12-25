@@ -15,6 +15,7 @@ namespace Lesson3
 
         static void Main()
         {
+            goto m;
             Console.WriteLine("Задание 1");
             {
                 Random rand = new();
@@ -112,11 +113,11 @@ namespace Lesson3
             Console.WriteLine();
 
 
-
+            m:
 
             Console.WriteLine("Задание 4");
             {
-                char[,] field = new char[10, 10];
+                char[,] field = new char[12, 12];
 
                 for (int i = 0; i < field.GetLength(0); i++)
                 {
@@ -194,7 +195,7 @@ namespace Lesson3
                             }
                             else
                             {
-                                Console.WriteLine("У вас закончились трехпалуьные корабли");
+                                Console.WriteLine("У вас закончились трехпалубные корабли");
                                 Console.ReadKey();
                             }
                             break;
@@ -243,11 +244,6 @@ namespace Lesson3
 
             while (isShipNotAdded)
             {
-                Console.WriteLine("На данный момент доска выглядит так :");
-                DrawField(field);
-
-                Console.WriteLine("Напишите координаты\nP.S. координаты начинаются с 0; 0");
-
                 bool isItNotConverting = true;
                 int coordinateXBeg = 0;
                 int coordinateYBeg = 0;
@@ -256,6 +252,10 @@ namespace Lesson3
 
                 while (isItNotConverting)
                 {
+                    Console.WriteLine("На данный момент доска выглядит так :");
+                    DrawField(field);
+
+                    Console.WriteLine("Напишите координаты\nP.S. координаты начинаются с 1; 1");
                     try
                     {
                         if (ship == Ship.Monohull)
@@ -266,7 +266,7 @@ namespace Lesson3
                             Console.WriteLine("Введите координату y (номер столбца)");
                             coordinateYBeg = Convert.ToInt32(Console.ReadLine());
 
-                            if (!(coordinateXBeg >= 0 && coordinateXBeg <= field.GetLength(0) - 1 && coordinateYBeg >= 0 && coordinateYEnd <= field.GetLength(1) - 1))
+                            if (!(coordinateXBeg > 0 && coordinateXBeg <= field.GetLength(0) - 2 && coordinateYBeg > 0 && coordinateYEnd <= field.GetLength(1) - 2))
                             {
                                 Console.WriteLine("Вы вышли за пределы вашей доски!!!!!");
                                 throw new Exception();
@@ -286,12 +286,12 @@ namespace Lesson3
                             Console.WriteLine("Введите конец корабля по координате y (номер столбца)");
                             coordinateYEnd = Convert.ToInt32(Console.ReadLine());
 
-                            if (!(coordinateXBeg >= 0 && coordinateXBeg <= field.GetLength(0) - 1 && coordinateYBeg >= 0 && coordinateYBeg <= field.GetLength(1) - 1))
+                            if (!(coordinateXBeg > 0 && coordinateXBeg <= field.GetLength(0) - 2 && coordinateYBeg > 0 && coordinateYBeg <= field.GetLength(1) - 2))
                             {
                                 Console.WriteLine("Вы вышли за пределы вашей доски!!!!!");
                                 throw new Exception();
                             }
-                            else if (!(coordinateXEnd >= 0 && coordinateXEnd <= field.GetLength(0) - 1 && coordinateYEnd >= 0 && coordinateYEnd <= field.GetLength(1) - 1))
+                            else if (!(coordinateXEnd > 0 && coordinateXEnd <= field.GetLength(0) - 2 && coordinateYEnd > 0 && coordinateYEnd <= field.GetLength(1) - 2))
                             {
                                 Console.WriteLine("Вы вышли за пределы вашей доски!!!!!");
                                 throw new Exception();
@@ -351,9 +351,9 @@ namespace Lesson3
         static void DrawField(char[,] field)
         {
             Console.ForegroundColor = ConsoleColor.White;
-            for (int i = 0; i< field.GetLength(0); i++)
+            for (int i = 1; i< field.GetLength(0) - 1; i++)
             {
-                for (int j = 0; j < field.GetLength(1); j++)
+                for (int j = 1; j < field.GetLength(1) - 1; j++)
                 {
                     if (field[i,j] == 'X')
                     {
@@ -435,133 +435,13 @@ namespace Lesson3
 
         static bool IsEmpty(char[,] field, int x, int y, int x1, int y1)
         {
-            if (x == 0 && y == 0)
+            for (int i = x - 1; i <= x1 + 1; i++)
             {
-                for (int i = x; i <= x1 + 1; i++)
+                for (int j = y - 1; j <= y1 + 1; j++)
                 {
-                    for (int j = y; j <= y1 + 1; j++)
+                    if (field[i, j] == SHIP_SYMBOL)
                     {
-                        if (field[i, j] == SHIP_SYMBOL)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            else if (x == field.GetLength(0) - 1 && y == 0)
-            {
-                for (int i = x - 1; i <= x; i++)
-                {
-                    for (int j = y; j <= y1 + 1; j++)
-                    {
-                        if (field[i, j] == SHIP_SYMBOL)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            else if (x == 0 && y == field.GetLength(1) - 1)
-            {
-                for (int i = x; i <= x1 + 1; i++)
-                {
-                    for (int j = y - 1; j <= y; j++)
-                    {
-                        if (field[i, j] == SHIP_SYMBOL)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            else if (x1 == field.GetLength(0) - 1 && y1 == field.GetLength(1) - 1)
-            {
-                for (int i = x - 1; i <= x1; i++)
-                {
-                    for (int j = y - 1; j <= y; j++)
-                    {
-                        if (field[i, j] == SHIP_SYMBOL)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            else if (x1 != field.GetLength(0) - 1 && y1 == field.GetLength(1) - 1 && x != 0)
-            {
-                for (int i = x - 1; i <= x1 + 1; i++)
-                {
-                    for (int j = y - 1; j <= y1; j++)
-                    {
-                        if (field[i, j] == SHIP_SYMBOL)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            else if (x1 == field.GetLength(0) - 1 && y1 != field.GetLength(1) - 1 && y != 0)
-            {
-                for (int i = x - 1; i <= x1; i++)
-                {
-                    for (int j = y - 1; j <= y1 + 1; j++)
-                    {
-                        if (field[i, j] == SHIP_SYMBOL)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            else if (x == 0 && y != 0 && y1 != 0 && y1 != field.GetLength(1) - 1)
-            {
-                for (int i = x; i <= x1 + 1; i++)
-                {
-                    for (int j = y - 1; j <= y1 + 1; j++)
-                    {
-                        if (field[i, j] == SHIP_SYMBOL)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            else if (y == 0 && x != 0 && x1 != field.GetLength(1) - 1)
-            {
-                for (int i = x - 1; i <= x1 + 1; i++)
-                {
-                    for (int j = y; j <= y1 + 1; j++)
-                    {
-                        if (field[i, j] == SHIP_SYMBOL)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            else if (x == 0 && y1 == field.GetLength(1) - 1)
-            {
-                for (int i = x; i <= x1 + 1; i++)
-                {
-                    for (int j = y - 1; j <= y1; j++)
-                    {
-                        if (field[i,j] == SHIP_SYMBOL)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                for (int i = x - 1; i < x1 + 1; i++)
-                {
-                    for (int j = y - 1; j <= y1 + 1; j++)
-                    {
-                        if (field[i, j] == SHIP_SYMBOL)
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
             }
